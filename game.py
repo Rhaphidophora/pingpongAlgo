@@ -2,7 +2,7 @@ from pygame import *
 
 class GameSprite(sprite.Sprite):
 
-    def __init__(self, player_image, player_x, player_y, player_speed, wight, height): # добавить еще два параметра при создании и задавать размер прямоугольгника для картинки самим
+    def __init__(self, player_image, player_x, player_y, player_speed, wight, height):
         super().__init__()
  
         self.image = transform.scale(image.load(player_image), (wight, height)) # вместе 55,55 - параметры
@@ -21,13 +21,13 @@ class Player(GameSprite):
         keys = key.get_pressed()
         if keys[K_UP] and self.rect.y > 5:
             self.rect.y -= self.speed
-        if keys[K_DOWN] and self.rect.y < win_height - 80:
+        if keys[K_DOWN] and self.rect.y < win_height - 150:
             self.rect.y += self.speed
     def update_l(self):
         keys = key.get_pressed()
         if keys[K_w] and self.rect.y > 5:
             self.rect.y -= self.speed
-        if keys[K_s] and self.rect.y < win_height - 80:
+        if keys[K_s] and self.rect.y < win_height - 150:
             self.rect.y += self.speed
 
 
@@ -42,10 +42,22 @@ finish = False
 clock = time.Clock()
 FPS = 60
 
+
+racket1 = Player("racket.png", 30, 200, 10, 50, 150 )
+racket2 = Player("racket.png", 520, 200, 10, 50, 150)
+
 while game:
     for e in event.get():
         if e.type == QUIT:
             game = False
+
+    window.fill(back)
+
+    racket1.update_l()
+    racket2.update_r()
+
+    racket1.reset()
+    racket2.reset()
 
     display.update()
     clock.tick(FPS)
